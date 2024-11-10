@@ -5,6 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
+import pandas as pd
 
 # Flask miscellaneous
 app = Flask(__name__)
@@ -13,6 +14,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'ctrlhackdel'
+
+# Load the calorie data once when the server starts
+calorie_data = pd.read_csv('calories.csv')
+calorie_data['Cals_per100grams'] = calorie_data['Cals_per100grams'].str.replace(' cal', '').astype(int)
 
 login_manager = LoginManager()  # class that handles log-in authentication
 login_manager.init_app(app)
@@ -190,6 +195,34 @@ def register():
     # Render the registration template with the form (initial or after unsuccessful registration)
     return render_template('register.html', form=form)
 
+
+@app.route('/calorie-counter', methods=['GET', 'POST'])
+def calorie():
+    query = request.args.get('query', '')  # Get the search query
+    search_results = []
+
+    if query:
+        # Filter items based on search query (case-insensitive)
+        search_results = calorie_data[calorie_data['FoodItem'].str.contains(query, case=False)]
+        search_results = search_results[['FoodItem', 'Cals_per100grams']].to_dict(orient='records')
+
+    return render_template('calorie-calculator.html', search_results=search_results)
+
+@app.route('/add_item', methods=['POST'])
+def add_item():
+    food_item = request.json.get('food_item')
+    calories = request.json.get('calories')
+    if 'selected_items' not in session:
+        session['selected_items'] = []
+    session['selected_items'].append({'food_item': food_item, 'calories': calories})
+    session.modified = True
+    return jsonify(session['selected_items'])
+
+@app.route('/calculate_total', methods=['POST'])
+def calculate_total():
+    selected_items = session.get('selected_items', [])
+    total_calories = sum(int(item['calories']) for item in selected_items)
+    return jsonify(total_calories=total_calories)
 
 if __name__ == '__main__':
     app.run(debug=True)
