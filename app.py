@@ -206,16 +206,26 @@ def calorie():
         search_results = calorie_data[calorie_data['FoodItem'].str.contains(query, case=False)]
         search_results = search_results[['FoodItem', 'Cals_per100grams']].to_dict(orient='records')
 
-    return render_template('calorie-calculator.html', search_results=search_results)
+    # Get selected items from the session or default to an empty list
+    selected_items = session.get('selected_items', [])
+
+    return render_template('calorie-calculator.html', search_results=search_results, selected_items=selected_items)
 
 @app.route('/add_item', methods=['POST'])
 def add_item():
     food_item = request.json.get('food_item')
     calories = request.json.get('calories')
+
+    # If 'selected_items' does not exist in the session, create it
     if 'selected_items' not in session:
         session['selected_items'] = []
+    
+    # Add the new item to the session
     session['selected_items'].append({'food_item': food_item, 'calories': calories})
+    
+    # Mark the session as modified to trigger saving
     session.modified = True
+
     return jsonify(session['selected_items'])
 
 @app.route('/calculate_total', methods=['POST'])
@@ -223,6 +233,22 @@ def calculate_total():
     selected_items = session.get('selected_items', [])
     total_calories = sum(int(item['calories']) for item in selected_items)
     return jsonify(total_calories=total_calories)
+
+@app.route('/remove_item', methods=['POST'])
+def remove_item():
+    food_item = request.json.get('food_item')
+
+    # If 'selected_items' is not in the session, do nothing
+    if 'selected_items' in session:
+        selected_items = session['selected_items']
+
+        # Find and remove the item from the selected_items list
+        session['selected_items'] = [item for item in selected_items if item['food_item'] != food_item]
+
+        # Mark the session as modified to save the change
+        session.modified = True
+
+    return jsonify(session['selected_items'])
 
 if __name__ == '__main__':
     app.run(debug=True)

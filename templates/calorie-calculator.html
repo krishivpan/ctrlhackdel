@@ -41,7 +41,13 @@
 
         <div id="selected-items">
             <h2>Selected Items</h2>
-            <ul id="item-list"></ul>
+            <ul id="item-list">
+                {% for item in selected_items %}
+                    <li>{{ item['food_item'] }} - {{ item['calories'] }} cal
+                        <button class="remove-button" data-item="{{ item['food_item'] }}">Remove</button>
+                    </li>
+                {% endfor %}
+            </ul>
             <button onclick="calculateTotal()">Calculate Total Calories</button>
             <p id="total-calories"></p>
         </div>
@@ -58,15 +64,67 @@
             })
             .then(response => response.json())
             .then(data => {
+                // Add the item to the displayed list of selected items
                 const itemList = document.getElementById('item-list');
                 const listItem = document.createElement('li');
                 listItem.textContent = `${foodItem} - ${calories} cal`;
-                itemList.appendChild(listItem);
-            });
 
-            console.log(`Item: ${foodItem}, Calories: ${calories}`);
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.classList.add('remove-button');
+                removeButton.setAttribute('data-item', foodItem);  // Set a custom attribute to identify the item
+                
+                // Attach an event listener to the remove button
+                removeButton.addEventListener('click', function() {
+                    removeItem(foodItem);  // Call the removeItem function when clicked
+                });
+
+                listItem.appendChild(removeButton);
+                itemList.appendChild(listItem);
+
+                // Recalculate the total calories after adding
+                calculateTotal();
+            });
+        }
+    
+        function removeItem(foodItem) {
+            fetch('{{ url_for("remove_item") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ food_item: foodItem })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Remove the item from the UI list
+                const itemList = document.getElementById('item-list');
+                const listItems = itemList.getElementsByTagName('li');
+
+                // Loop through all list items and find the one to remove
+                for (let i = 0; i < listItems.length; i++) {
+                    const listItem = listItems[i];
+                    if (listItem.textContent.includes(foodItem)) {
+                        itemList.removeChild(listItem);  // Remove the item from the DOM
+                        break;
+                    }
+                }
+
+                // Recalculate the total calories after removal
+                calculateTotal();
+            });
         }
 
+    
+        // Attach a click event listener to the dynamically created remove buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('add-button')) {
+                const foodItem = event.target.getAttribute('data-item');
+                const calories = parseFloat(event.target.getAttribute('data-calories'));
+                addItem(foodItem, calories);  // Call the addItem function
+            }
+        });
+    
         function calculateTotal() {
             fetch('{{ url_for("calculate_total") }}', {
                 method: 'POST',
@@ -76,6 +134,7 @@
             })
             .then(response => response.json())
             .then(data => {
+                // Display the total calories in the total-calories element
                 document.getElementById('total-calories').textContent = `Total Calories: ${data.total_calories} cal`;
             });
         }
