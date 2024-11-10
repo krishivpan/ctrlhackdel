@@ -9,10 +9,10 @@ from flask_bcrypt import Bcrypt
 # Flask miscellaneous
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'ctrlhackdel'
-SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 login_manager = LoginManager()  # class that handles log-in authentication
 login_manager.init_app(app)
