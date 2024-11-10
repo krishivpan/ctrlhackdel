@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="En">
+
+<head>
+  <meta charset="UTF-8">
+  <title>EECS1012: Lab 6</title>
+  <link rel="stylesheet" type="text/css" href="lab6.css" title="style" /> 
+  <script src="lab6.js" defer="true"></script>
+</head>
+
+<body onload="activateButton()">
+
+  <header>
+    <h1>Run an Algorithm!</h1>
+  </header>
+  
+  <span class="column">
+    <label for="algorithm">Choose an Algorithm:</label>
+    <select name="algorithm" id="algorithm">
+      <option value="problem1">problem 1</option>
+      <option value="problem2">problem 2</option>
+      <option value="problem3">problem 3</option>
+      <option value="problem4">problem 4</option>
+      <option value="problem5">problem 5</option>
+      <option value="problem6">problem 6</option>      
+    </select>
+    <p>
+        <label for="input">Input a Number:</label>
+        <input id="input" type="number" min="0" max="100000000000"/>
+    </p>
+	<p><button id="submit">Enter</button></p>
+	<div id="output"><!-- this is where we will print results! --></div>
+  </span>	
+
+</body>
+</html>
