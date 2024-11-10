@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Calorie Tracker</h1>
+
+        <!-- Search form -->
+        <form method="get" action="{{ url_for('calorie') }}">
+            <input type="text" name="query" placeholder="Search for food item..." />
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Display search results -->
+        <div id="search-results">
+            {% for result in search_results %}
+                <div>
+                    <span>{{ result['FoodItem'] }} - {{ result['Cals_per100grams'] }} cal</span>
+                    <button 
+                        class="add-button"
+                        data-item="{{ result['FoodItem'] }}"
+                        data-calories="{{ result['Cals_per100grams'] }}">
+                        Add
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Display selected items and total calorie count -->
+        <div id="selected-items">
+            <h2>Selected Items</h2>
+            <ul id="item-list"></ul>
+            <button onclick="calculateTotal()">Calculate Total Calories</button>
+            <p id="total-calories"></p>
+        </div>
+    </div>
+
+    <script>
+        function addItem(foodItem, calories) {
+            fetch('{{ url_for("add_item") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ food_item: foodItem, calories: calories })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const itemList = document.getElementById('item-list');
+                const listItem = document.createElement('li');
+                listItem.textContent = `${foodItem} - ${calories} cal`;
+                itemList.appendChild(listItem);
+            });
+
+            console.log(`Item: ${foodItem}, Calories: ${calories}`);
+        }
+
+        function calculateTotal() {
+            fetch('{{ url_for("calculate_total") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('total-calories').textContent = `Total Calories: ${data.total_calories} cal`;
+            });
+        }
+
+        // Attach a click event listener to the dynamically created buttons
+        document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('add-button')) {
+            const foodItem = event.target.getAttribute('data-item');
+            const calories = parseFloat(event.target.getAttribute('data-calories'));
+            addItem(foodItem, calories);
+            }
+        });
+
+    </script>
+</body>
+</html>
