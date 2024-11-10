@@ -2,18 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Homepage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}" title="style"/>
 </head>
 <body>
+    <nav class="navbar" style="position: absolute;">
+        <div class="title"><a href="homepage.html">Na<span>m</span>e</a></div>
+        <ul class="navtools">
+          <li class="nav-item base first"><a href="homepage.html">Home</a></li>
+          <li class="nav-item"><a href="Features.html">Features</a></li>
+          <li class="nav-item"><a href="vision.html">Mission</a></li>
+          <li class="nav-item"><a href="team.html">Meet the Team</a></li>
+          <li class="nav-item last"><a href="contact-us.html">Contact Us</a></li>
+        </ul>
+      </nav>
+    <div class="egg"><img src="{{ url_for('static', filename='media/egg-svgrepo-com (1).svg') }}" alt="egg"></div>
     <div class="wrapper">
         <form action="">
-            <div class="input_box">
-                <input type="text"  placeholder="" required>
-            </div>
             <h1>Welcome to NutriNow,user</h1>
             </form>
-      
     </div>
 </body>
 </html>

@@ -4,8 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>**</title>
-  <link rel="stylesheet" type="text/css" href="contact-us.css" title="style" /> 
+  <title>Contact Us!</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='contact-us.css') }}">
+  <!-- <link rel="stylesheet" type="text/css" href="contact-us.css" title="style" />  -->
 </head>
 
 <body>
@@ -19,7 +20,7 @@
       <li class="nav-item last"><a href="ffc.html">Fitness Projection</a></li>
     </ul>
   </nav>
-  <div class="egg"><img src="egg-svgrepo-com (1).svg" alt="egg"></div>
+  <div class="egg"><img src="{{ url_for('static', filename='media/egg-svgrepo-com (1).svg') }}" alt="egg"></div>
   <div>
     <form id="login">
       <p>Drop your email id</p>        

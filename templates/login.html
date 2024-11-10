@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>**</title>
+  <title>Login Page</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}" /> 
 </head>
 <body>
@@ -19,7 +19,7 @@
     <li class="nav-item last"><a href="contact-us.html">Contact Us</a></li>
   </ul>
 </nav>
-<div class="egg"><img src="egg-svgrepo-com (1).svg" alt="egg"></div>
+<div class="egg"><img src="{{ url_for('static', filename='media/egg-svgrepo-com (1).svg') }}" alt="egg"></div>
 <div>
   <form id="login">
       <h1>Hook Quote</h1>

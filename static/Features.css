@@ -1,0 +1,32 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: Helvetica;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.wrapper {
+    text-align: center;
+    width: 80%;
+    max-width: 600px;
+    background-color: #892128;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    font-size: 2em;
+    color: white;
+    margin: 0 0 15px;
+}
+
+p {
+    font-size: 1.2em;
+    color: white;
+    margin: 0;
+}

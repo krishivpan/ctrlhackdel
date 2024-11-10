@@ -4,19 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calorie Tracker</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='calorie-calculator.css') }}">
+    <!-- <link rel="stylesheet" href="calorie-calculator.css"> -->
 </head>
 <body>
     <div class="wrapper">
         <h1>Calorie Tracker</h1>
-
-        <!-- Search form -->
+        <nav class="navbar" style="position: absolute;">
+            <div class="title"><a href="homepage.html">Na<span>m</span>e</a></div>
+            <ul class="navtools">
+              <li class="nav-item base first"><a href="calorie-calculator.html">Calorie Calculator</a></li>
+              <li class="nav-item"><a href="menu.html">Menu</a></li>
+              <li class="nav-item"><a href="cmenu.html">Customized Menu</a></li>
+              <li class="nav-item last"><a href="ffc.html">Fitness Projection</a></li>
+            </ul>
+          </nav>
+        <div class="egg"><img src="{{ url_for('static', filename='media/egg-svgrepo-com (1).svg') }}" alt="egg"></div>
         <form method="get" action="{{ url_for('calorie') }}">
             <input type="text" name="query" placeholder="Search for food item..." />
             <button type="submit">Search</button>
         </form>
 
-        <!-- Display search results -->
         <div id="search-results">
             {% for result in search_results %}
                 <div>
@@ -31,7 +39,6 @@
             {% endfor %}
         </div>
 
-        <!-- Display selected items and total calorie count -->
         <div id="selected-items">
             <h2>Selected Items</h2>
             <ul id="item-list"></ul>
@@ -73,7 +80,6 @@
             });
         }
 
-        // Attach a click event listener to the dynamically created buttons
         document.addEventListener('click', function(event) {
         if (event.target.classList.contains('add-button')) {
             const foodItem = event.target.getAttribute('data-item');
