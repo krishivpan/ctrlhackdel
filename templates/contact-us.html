@@ -12,13 +12,12 @@
 <body>
   <header><h1>Contact Us</h1></header>
   <nav class="navbar" style="position: absolute;">
-    <div class="title"><a href="homepage.html">Na<span>m</span>e</a></div>
+    <div class="title"><a href="{{url_for('homepage')}}">Na<span>m</span>e</a></div>
     <ul class="navtools">
-      <li class="nav-item base first"><a href="calorie-calculator.html">Calorie Calculator</a></li>
-      <li class="nav-item"><a href="menu.html">Menu</a></li>
-      <li class="nav-item"><a href="cmenu.html">Customized Menu</a></li>
-      <li class="nav-item last"><a href="ffc.html">Fitness Projection</a></li>
-    </ul>
+      <li class="nav-item base first"><a href="{{url_for('calorie-calculator')}}">Calorie Calculator</a></li>
+      <li class="nav-item"><a href="{{url_for('menu')}}">Menu</a></li>
+      <li class="nav-item"><a href="{{url_for('cmenu')}}">Customized Menu</a></li>
+      <li class="nav-item last"><a href="{{url_for('ffc')}}">Fitness Projection</a></li>
   </nav>
   <div class="egg"><img src="{{ url_for('static', filename='media/egg-svgrepo-com (1).svg') }}" alt="egg"></div>
   <div>
