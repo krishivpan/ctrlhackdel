@@ -1,31 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="En">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}" />
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>**</title>
+  <link rel="stylesheet" type="text/css" href="register.css" title="style" /> 
 </head>
 <body>
-    <div class="wrapper">
-        <h1>Register</h1>
-        <div class="input-box">
-            <form method="POST" action="">
-                {{ form.hidden_tag() }}
-                {{ form.username }}
-                {{ form.password }}
-                {{ form.submit }}
-            </form> 
-        </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <div class="register-link">
-            <p>Already have an account? <a href="{{url_for('login')}}">Login</a></p>
-        </div>
-    </div>
+<!--<header><h1>Project Name</h1></header>add project's name later-->
+<nav class="navbar" style="position: absolute;">
+  <div class="title"><a href="homepage.html">Na<span>m</span>e</a></div>
+  <ul class="navtools">
+    <li class="nav-item base first"><a href="homepage.html">Home</a></li>
+    <li class="nav-item"><a href="Features.html">Features</a></li>
+    <li class="nav-item"><a href="vision.html">Mission</a></li>
+    <li class="nav-item"><a href="team.html">Meet the Team</a></li>
+    <li class="nav-item last"><a href="help-desk.html">Contact Us</a></li>
+  </ul>
+</nav>
+<div class="egg"><img src="egg-svgrepo-com (1).svg" alt="egg"></div>
+<div>
+  <form id="login">
+      <h1>Hook Quote</h1>
+
+      <div>
+        <label for="MailID"></label>
+        <input type="text" id="MailId" placeholder="Email Address" required>
+      </div>
+      
+      <div>
+          <label for="username"></label>
+          <input type="text" id="username" placeholder="username" required>
+      </div>
+      
+      <div>
+          <label for="password"></label>
+          <input type="password" id="password" placeholder="password" required>
+      </div>
+
+      <button type="submit">REGISTER</button>
+      
+      <p>Already a member?</p>
+
+      <div><a href="login.html">Log In</a></div>
+  </form>
+</div>
 </body>
 </html>
