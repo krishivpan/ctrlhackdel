@@ -81,3 +81,115 @@ class RegisterForm(FlaskForm):
         if existing_user_username:
             raise ValidationError(
                 "That username already exists. Please choose a different one.")
+
+
+class LoginForm(FlaskForm):
+    """Creates a form for the login of a user"""
+
+    # Creates a string field for the username
+    username = StringField(validators=[InputRequired(), Length(
+        min=4, max=20)], render_kw={"placeholder": "Username"})
+
+    # Creates a password field for the password
+    password = PasswordField(validators=[InputRequired(), Length(
+        min=4, max=20)], render_kw={"placeholder": "Password"})
+
+    submit = SubmitField("Login")  # sumbit field to submit username and password
+
+
+class WelcomePage:
+    def __init__(self):
+        pass
+
+class HomepageRoute:
+    """Routes and processes form data for the homepage."""
+
+    @classmethod
+    def process_form(cls, form):
+        """Process form data when submitted."""
+        if form.validate_on_submit():
+            pass
+
+    @classmethod
+    def render_template(cls, form):
+        """Render the homepage template."""
+        return render_template('homepage.html', form=form, variable=session.get('output', ''))
+    
+
+@app.route('/')
+def home():
+    """Redirects the user to the homepage"""
+    return redirect(url_for('homepage'))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    # Create an instance of the LoginForm
+    form = LoginForm()
+
+    # Check if the form is submitted and valid
+    if form.validate_on_submit():
+        # Query the database for a user with the provided username
+        user = User.query.filter_by(username=form.username.data).first()
+
+        # If a user is found, check the password
+        if user:
+            # Check if the hashed password matches the input password
+            if bcrypt.check_password_hash(user.password, form.password.data):
+                # Log in the user and redirect to the homepage
+                login_user(user)
+                return redirect(url_for('homepage'))
+
+    # Render the login template with the form (initial or after unsuccessful login)
+    return render_template('login.html', form=form)
+
+
+@app.route('/homepage', methods=['GET', 'POST'])
+@login_required
+def homepage():
+    # Create an instance of the PromptForm
+    form = WelcomePage()
+
+    # Process the prompt from the user
+    HomepageRoute.process_form(form)
+    return HomepageRoute.render_template(form)
+
+@app.route('/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+    # Clear the ToDo list before logging out
+    session.pop('todos', None)
+    
+    # Log the user out of thier session
+    logout_user()
+
+    # Redirect the user back to the login page
+    return redirect(url_for('login'))
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    # Create an instance of the RegisterForm
+    form = RegisterForm()
+
+    # Check if the form is submitted and valid
+    if form.validate_on_submit():
+        # Generate a hashed password using bcrypt
+        hashed_password = bcrypt.generate_password_hash(form.password.data)
+
+        # Create a new user with the provided username and hashed password
+        new_user = User(username=form.username.data, password=hashed_password)
+
+        # Add the new user to the database and commit changes
+        db.session.add(new_user)
+        db.session.commit()
+
+        # Redirect to the login page after successful registration
+        return redirect(url_for('login'))
+
+    # Render the registration template with the form (initial or after unsuccessful registration)
+    return render_template('register.html', form=form)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
