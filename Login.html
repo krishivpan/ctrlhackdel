@@ -3,34 +3,43 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>EECS1012: Lab 6</title>
-  <link rel="stylesheet" type="text/css" href="lab6.css" title="style" /> 
-  <script src="lab6.js" defer="true"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>**</title>
+  <link rel="stylesheet" type="text/css" href="Login.css" title="style" /> 
 </head>
-
-<body onload="activateButton()">
-
-  <header>
-    <h1>Run an Algorithm!</h1>
-  </header>
-  
-  <span class="column">
-    <label for="algorithm">Choose an Algorithm:</label>
-    <select name="algorithm" id="algorithm">
-      <option value="problem1">problem 1</option>
-      <option value="problem2">problem 2</option>
-      <option value="problem3">problem 3</option>
-      <option value="problem4">problem 4</option>
-      <option value="problem5">problem 5</option>
-      <option value="problem6">problem 6</option>      
-    </select>
-    <p>
-        <label for="input">Input a Number:</label>
-        <input id="input" type="number" min="0" max="100000000000"/>
-    </p>
-	<p><button id="submit">Enter</button></p>
-	<div id="output"><!-- this is where we will print results! --></div>
-  </span>	
-
+<header><h1>Project Name</h1></header><!--add project's name later-->
+<nav class="navbar" style="position: absolute;">
+  <div class="title"><a href="index.html">PATH<b class="blu">MY</b>WAY</a></div>
+  <ul class="navtools">
+    <li class="nav-item base first"><a href="homepage.html">Home</a></li>
+    <li class="nav-item"><a href="Features.html">Features</a></li>
+    <li class="nav-item"><a href="vision.html">Mission</a></li>
+    <li class="nav-item last"><a href="help-desk.html">Contact Us</a></li>
+  </ul>
+</nav>
+<div>
+  <form id="login">
+      <h1>Login</h1>
+      
+      <div>
+          <label for="username">Username or Email</label>
+          <input type="text" id="username" placeholder="Enter your username or email" required>
+      </div>
+      
+      <div>
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required>
+      </div>
+      
+      <button type="submit">Continue</button>
+      
+      <p>
+          <a href="#">Forgot your password?</a>
+      </p>
+      <p>
+          <a href="signup.html">Don't have an account? Create account</a>
+      </p>
+  </form>
+</div>
 </body>
 </html>
