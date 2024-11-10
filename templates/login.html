@@ -5,45 +5,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>**</title>
-  <link rel="stylesheet" type="text/css" href="login.css" title="style" /> 
+  <link rel="stylesheet" type="text/css" href="Login.css" title="style" /> 
 </head>
-<body>
-<!--<header><h1>Project Name</h1></header>add project's name later-->
+<header><h1>Project Name</h1></header><!--add project's name later-->
 <nav class="navbar" style="position: absolute;">
-  <div class="title"><a href="homepage.html">Na<span>m</span>e</a></div>
+  <div class="title"><a href="index.html">PATH<b class="blu">MY</b>WAY</a></div>
   <ul class="navtools">
     <li class="nav-item base first"><a href="homepage.html">Home</a></li>
     <li class="nav-item"><a href="Features.html">Features</a></li>
     <li class="nav-item"><a href="vision.html">Mission</a></li>
-    <li class="nav-item"><a href="team.html">Meet the Team</a></li>
     <li class="nav-item last"><a href="help-desk.html">Contact Us</a></li>
   </ul>
 </nav>
-<div class="egg"><img src="egg-svgrepo-com (1).svg" alt="egg"></div>
 <div>
   <form id="login">
-      <h1>Hook Quote</h1>
+      <h1>Login</h1>
       
       <div>
-          <label for="username"></label>
-          <input type="text" id="username" placeholder="username" required>
+          <label for="username">Username or Email</label>
+          <input type="text" id="username" placeholder="Enter your username or email" required>
       </div>
       
       <div>
-          <label for="password"></label>
-          <input type="password" id="password" placeholder="password" required>
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required>
       </div>
-      <div class="checkbox">
-        <input type="checkbox" id="remember_me" name="Remember Me"/>
-        <label for="remember_me">Remember Me</label>
-      </div>
-
-      <button type="submit">LOG IN</button>
       
-      <p>Forgot your password?</p>
-
-      <div><a href="register.html">Create an account</a></div>
+      <button type="submit">Continue</button>
+      
+      <p>
+          <a href="#">Forgot your password?</a>
+      </p>
   </form>
+  <div class="register-link">
+    <p>Don't have an account? <a href="{{url_for('register')}}">Register</a></p>
+  </div>
 </div>
 </body>
 </html>
